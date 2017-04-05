@@ -1,0 +1,26 @@
+#ifndef PORTMAP_H
+#define PORTMAP_H
+
+// 1 - Left
+// 2 - Front
+// 3 - Back
+// 4 - Right
+
+#define LEFT_DRIVE_PWM 1
+#define FRONT_DRIVE_PWM 2
+#define BACK_DRIVE_PWM 3
+#define RIGHT_DRIVE_PWM 4
+
+#define LEFT_ENCODER_A_DIGITAL 1
+#define LEFT_ENCODER_B_DIGITAL 2
+
+#define FRONT_ENCODER_A_DIGITAL 3
+#define FRONT_ENCODER_B_DIGITAL 4
+
+#define BACK_ENCODER_A_DIGITAL 5
+#define BACK_ENCODER_B_DIGITAL 6
+
+#define RIGHT_ENCODER_A_DIGITAL 7
+#define RIGHT_ENCODER_B_DIGITAL 8
+
+#endif
