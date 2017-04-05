@@ -1,6 +1,7 @@
 #include "PoseCalculator.h"
 #include <WPILib/WPILib.h>
 #include "constants.h"
+#include <math.h>
 
 PoseCalculator* PoseCalculator::getInstance() {
     static PoseCalculator pose;

@@ -1,6 +1,7 @@
 #include "DrivetrainControl.h"
 #include "constants.h"
 #include "PoseCalculator.h"
+#include <math.h>
 
 DrivetrainControl* DrivetrainControl::getInstance() {
     static DrivetrainControl control;
