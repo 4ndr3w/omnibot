@@ -14,7 +14,7 @@ public:
     static Drivetrain* getInstance();
 
 	void drive(double throttle, double turn);
-	void drive(double y, double x, double turn);
+	void drive(double y, double x, double twist);
     void tank(double left, double right);
     
     void reset();

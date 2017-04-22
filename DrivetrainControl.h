@@ -3,7 +3,7 @@
 #include "semLib.h"
 #include "OmniBotComm.h"
 #include <queue>
-#include <atomic>
+#include "VXAtomic.h"
 
 #ifndef DRIVE_CONTROL_H
 #define DRIVE_CONTROL_H
@@ -22,7 +22,7 @@ class DrivetrainControl {
     SEM_ID lock;
     SEM_ID profileQueueMutex;
 
-    std::atomic<ControlMode> mode;
+    VXAtomic<ControlMode> mode;
     
     SimplePID linearPID;
     SimplePID angularPID;
@@ -31,11 +31,11 @@ class DrivetrainControl {
     double linearProfile_kV, angularProfile_kV;
     DrivetrainControl();
 
-    std::atomic<double> linearSetpoint;
-    std::atomic<double> linearActual;
+    VXAtomic<double> linearSetpoint;
+    VXAtomic<double> linearActual;
 
-    std::atomic<double> angularSetpoint;
-    std::atomic<double> angularActual;
+    VXAtomic<double> angularSetpoint;
+    VXAtomic<double> angularActual;
 public:
     static DrivetrainControl* getInstance();
     

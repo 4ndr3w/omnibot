@@ -66,6 +66,10 @@ void Drivetrain::drive(double y, double x, double twist) {
 //	printf("%i %i %i %i\n", leftEncoder->Get(), rightEncoder->Get(), frontEncoder->Get(), backEncoder->Get());
 }
 
+void Drivetrain::drive(double throttle, double turn) {
+    tank(throttle+turn, throttle-turn);
+}
+
 void Drivetrain::tank(double leftVel, double rightVel) {
     double twist = rightVel-leftVel;
     right->Set(-rightVel);

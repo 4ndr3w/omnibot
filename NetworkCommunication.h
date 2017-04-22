@@ -4,7 +4,6 @@
 #include "OmniBotComm.h"
 #include "TCPServer/TCPServer.h"
 #include "UDPSender/UDPSender.h"
-#include <queue>
 
 class NetworkCommunication : public TCPServer {
 	int sock;

@@ -23,10 +23,12 @@ void NetworkCommunication::handleClient(int sock, sockaddr_in source) {
 void NetworkCommunication::handleClientThread(int sock, int addr) {
     RobotMessage cmd;
     DrivetrainControl *driveControl = DrivetrainControl::getInstance();
-
     poseSender.addClient(addr);
-    while ( read(sock, (char*)&cmd, sizeof(RobotMessage)) != -1 )
+    int bytes = 0;
+    while ( (bytes = read(sock, (char*)&cmd, sizeof(RobotMessage))) != -1 )
     {
+        if ( bytes != sizeof(RobotMessage) )
+            continue;
         RobotResponse status = {true};
 
 		if ( cmd.type == MSG_DIFFERENTIAL_GOAL ) {
@@ -45,6 +47,7 @@ void NetworkCommunication::handleClientThread(int sock, int addr) {
             driveControl->clearProfileBuffer();
         }
         else if ( cmd.type == MSG_SET_DIFFERENTIAL_LINEAR_PID ) {
+            printf("PID is now: %f %f %f %f\n", cmd.data.pid.p, cmd.data.pid.i, cmd.data.pid.d, cmd.data.pid.f);
             driveControl->setDifferentialLinearPID(cmd.data.pid.p, cmd.data.pid.i, cmd.data.pid.d, cmd.data.pid.f);
         }
         else if ( cmd.type == MSG_SET_DIFFERENTIAL_ANGULAR_PID ) {

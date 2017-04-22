@@ -1,5 +1,5 @@
 #include "UDPSender.h"
-
+#include <stdio.h>
 UDPSender::UDPClient::UDPClient(sockaddr_in addr) : client(addr) {
 }
 
@@ -15,7 +15,7 @@ UDPSender::UDPSender(int port) {
     this->port = port;
     sock = socket(AF_INET, SOCK_DGRAM, 0);
     
-    /*sockaddr_in bindaddr;
+    sockaddr_in bindaddr;
     int sockaddr_len = sizeof(sockaddr_in);
     bzero((char*)&bindaddr, sockaddr_len);
     bindaddr.sin_family = AF_INET;
@@ -25,8 +25,8 @@ UDPSender::UDPSender(int port) {
 
     if ( bind(sock, (sockaddr*)&bindaddr, sockaddr_len) == ERROR ) {
         close(sock);
-        exit(1);
-    }*/
+        printf("UDPSender error\n");
+    }
 }
 
 
