@@ -88,10 +88,10 @@ void Drivetrain::tank(double leftVel, double rightVel) {
     back->Set(-twist);
 }
 
-void Drivetrain::raw(double left, double right, double front, double back) {
-    right->Set(right);
-	left->Set(left);
+void Drivetrain::raw(double leftV, double rightV, double frontV, double backV) {
+    right->Set(rightV);
+	left->Set(leftV);
 	
-	front->Set(front);
-	back->Set(back);
+	front->Set(frontV);
+	back->Set(backV);
 }

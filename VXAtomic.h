@@ -7,6 +7,13 @@ template <class type> class VXAtomic {
     Mutex mtx;
     type value;
 public:
+
+    VXAtomic() {}
+
+    VXAtomic(type initValue) {
+        value = initValue;
+    }
+    
     void operator= (type val) {
         mtx.lock();
         value = val;

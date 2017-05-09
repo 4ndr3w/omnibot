@@ -43,19 +43,19 @@ void DrivetrainControl::update() {
     semGive(lock);
 }
 
-void DrivetrainControl::setFrontPIDF(double kP, double kI, double kD, double kF) {
+void DrivetrainControl::setFrontPIDF(PIDConstants constants) {
 
 }
 
-void DrivetrainControl::setBackPIDF(double kP, double kI, double kD, double kF) {
+void DrivetrainControl::setBackPIDF(PIDConstants constants) {
 
 }
 
-void DrivetrainControl::setLeftPIDF(double kP, double kI, double kD, double kF) {
+void DrivetrainControl::setLeftPIDF(PIDConstants constants) {
 
 }
 
-void DrivetrainControl::setRightPIDF(double kP, double kI, double kD, double kF) {
+void DrivetrainControl::setRightPIDF(PIDConstants constants) {
 
 }
 
@@ -66,6 +66,6 @@ ControlMode DrivetrainControl::getMode() {
 }
 
 PIDInfo DrivetrainControl::getPIDInfo() {
-    PIDInfo data = {linearActual, linearSetpoint, angularActual, angularSetpoint};
+    PIDInfo data;
     return data;
 }

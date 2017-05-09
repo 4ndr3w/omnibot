@@ -6,6 +6,7 @@
 #include "OmniBotComm.h"
 #include <stdio.h>
 #include "DrivetrainControl.h"
+#include "PoseCalculator.h"
 
 NetworkCommunication::NetworkCommunication(int port, int udpPort) : TCPServer(port), poseSender(udpPort) {
 }
@@ -32,15 +33,15 @@ void NetworkCommunication::handleClientThread(int sock, int addr) {
         RobotResponse status = {true};
 
 		if ( cmd.type == MSG_SET_PID_FRONT )
-            driveControl->setFrontPID(cmd.data.pid);
+            driveControl->setFrontPIDF(cmd.data.pid);
         else if ( cmd.type == MSG_SET_PID_BACK )
-            driveControl->setBackPID(cmd.data.pid);
+            driveControl->setBackPIDF(cmd.data.pid);
         else if ( cmd.type == MSG_SET_PID_LEFT )
-            driveControl->setLeftPID(cmd.data.pid);
+            driveControl->setLeftPIDF(cmd.data.pid);
         else if ( cmd.type == MSG_SET_PID_RIGHT )
-            driveControl->setRightPID(cmd.data.pid);
+            driveControl->setRightPIDF(cmd.data.pid);
         else if ( cmd.type == MSG_RESET_POSE )
-            driveControl->reset();
+            PoseCalculator::getInstance()->reset();
         else if ( cmd.type == MSG_VELOCITY_GOAL )
             driveControl->setVelocityGoal(cmd.data.goal);
         else if ( cmd.type == MSG_OPENLOOP_GOAL )
