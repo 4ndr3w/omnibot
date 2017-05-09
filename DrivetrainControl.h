@@ -10,52 +10,38 @@
 
 enum ControlMode {
     OPENLOOP,
-    OMNI_CLOSEDLOOP,
-    TANK_CLOSEDLOOP,
-    TANK_PROFILE
+    VELOCITY
 };
 
 
 class DrivetrainControl {
-    Drivetrain *drive;
-    
     SEM_ID lock;
-    SEM_ID profileQueueMutex;
 
     VXAtomic<ControlMode> mode;
     
-    SimplePID linearPID;
-    SimplePID angularPID;
+    SimplePID left;
+    SimplePID right;
+    SimplePID front;
+    SimplePID back;
 
-    std::queue<PathPoint> profileBuffer;
-    double linearProfile_kV, angularProfile_kV;
+    Drivetrain *drive;
+
     DrivetrainControl();
 
-    VXAtomic<double> linearSetpoint;
-    VXAtomic<double> linearActual;
-
-    VXAtomic<double> angularSetpoint;
-    VXAtomic<double> angularActual;
 public:
     static DrivetrainControl* getInstance();
     
-    void setOmniGoal(bool closedLoop, double x, double y, double theta);
-    void setDifferentialGoal(bool closedLoop, double linear, double angular);
-    void startProfiledDifferentialGoal();
-    
-    void pushProfilePoint(PathPoint p);
-    void clearProfileBuffer();
+    void DrivetrainControl::setVelocityGoal(RobotVelocity goal);
+    void DrivetrainControl::setOpenLoop(RobotVelocity goal);
 
-    void setDifferentialLinearPID(double p, double i, double d, double f);
-    void setDifferentialAngularPID(double p, double i, double d, double f);
+    void DrivetrainControl::update();
 
-    ControlMode getMode();
-    double getLinearSetpoint();
-    double getLinearActual();
-    double getAngularSetpoint();
-    double getAngularActual();
-
-    PIDInfo getPIDInfo();
+    void DrivetrainControl::setFrontPIDF(double kP, double kI, double kD, double kF);
+    void DrivetrainControl::setBackPIDF(double kP, double kI, double kD, double kF);
+    void DrivetrainControl::setLeftPIDF(double kP, double kI, double kD, double kF);
+    void DrivetrainControl::setRightPIDF(double kP, double kI, double kD, double kF);
+    ControlMode DrivetrainControl::getMode();
+    PIDInfo DrivetrainControl::getPIDInfo();
 
     void update();
 };

@@ -33,6 +33,17 @@ RobotPose PoseCalculator::getPose() {
     return pose;
 }
 
+RobotVelocity PoseCalculator::getVelocity() {
+    return drive->getVelocity();
+}
+
+void PoseCalculator::reset() {
+    semTake(lock, WAIT_FOREVER);
+    x = y = theta = 0;
+    vx = vy = vth;
+    semGive(lock);
+}
+
 void PoseCalculator::update() {
     static double lastTime = Timer::GetFPGATimestamp();
     static double lastXPos = drive->getXDistance();

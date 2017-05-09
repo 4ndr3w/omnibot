@@ -2,6 +2,12 @@
 #define OMNIBOT_COMM
 
 #include <stdint.h>
+struct RobotVelocity {
+    double front;
+    double back;
+    double left;
+    double right;
+};
 
 struct RobotPose {
     double x;
@@ -16,11 +22,17 @@ struct RobotPose {
 };
 
 struct PIDInfo {
-    double linearActual;
-    double linearSetpoint;
-    
-    double angularActual;
-    double angularSetpoint;
+    double frontSetpoint;
+    double frontActual;
+
+    double backSetpoint;
+    double backActual;
+
+    double leftSetpoint;
+    double leftActual;
+
+    double rightSetpoint;
+    double rightActual;
 };
 
 struct RobotState {
@@ -30,45 +42,10 @@ struct RobotState {
     PIDInfo control;
 };
 
-struct ProfilePoint {
-	double pos;
-	double vel;
-	double acc;
-};
-
-#define MSG_DIFFERENTIAL_GOAL 1
-struct DriveDifferentialGoal {
-    bool useClosedLoop;
-    
-    double distanceGoal;
-    double angleGoal;
-};
-
-#define MSG_OMNI_GOAL 2
-struct DriveOmniGoal {
-    double x;
-    double y;
-    double theta;
-    
-    bool useClosedLoop;
-};
-
-#define MSG_PROFILED_DIFFERENTIAL_GOAL 3
-
-#define MSG_APPEND_PROFILE_BUFFER 4
-struct PathPoint {
-	ProfilePoint linear;
-    ProfilePoint angular;
-	
-	bool reinit;
-    bool isLast;
-	bool velOnly;
-};
-
-#define MSG_CLEAR_PROFILE_BUFFER 5
-
-#define MSG_SET_DIFFERENTIAL_LINEAR_PID 6
-#define MSG_SET_DIFFERENTIAL_ANGULAR_PID 7
+#define MSG_SET_PID_FRONT 1
+#define MSG_SET_PID_BACK 2
+#define MSG_SET_PID_LEFT 3
+#define MSG_SET_PID_RIGHT 4
 struct PIDConstants {
     double p;
     double i;
@@ -76,16 +53,15 @@ struct PIDConstants {
     double f;
 };
 
-#define MSG_RESET_ENCODERS 8
-#define MSG_RESET_GYRO 9
-#define MSG_RESET_POSE 10
+#define MSG_RESET_POSE 5
+
+#define MSG_VELOCITY_GOAL 6
+#define MSG_OPENLOOP_GOAL 7
 
 struct RobotMessage {
     uint8_t type;
     union {
-        PathPoint point;
-        DriveOmniGoal omniGoal;
-        DriveDifferentialGoal differentialGoal;   
+        RobotVelocity goal; 
         PIDConstants pid;
     } data;
 };

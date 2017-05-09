@@ -12,13 +12,15 @@ private:
     double x,y,theta;
     double vx,vy,vth;
     Drivetrain *drive;
-    
     PoseCalculator();
      
 public:
     static PoseCalculator* getInstance();
 
     RobotPose getPose();
+    RobotVelocity getVelocity();
+
+    void reset();
     
     void update();
     

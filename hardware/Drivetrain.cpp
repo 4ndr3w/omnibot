@@ -51,6 +51,15 @@ double Drivetrain::getRightDistance() {
     return rightEncoder->GetDistance();
 }
 
+RobotVelocity Drivetrain::getVelocity() {
+    RobotVelocity vel;
+    vel.front = frontEncoder->GetRate();
+    vel.back = backEncoder->GetRate();
+    vel.left = leftEncoder->GetRate();
+    vel.right = rightEncoder->GetRate();
+    return vel;
+}
+
 void Drivetrain::reset() {
     leftEncoder->Reset();
     rightEncoder->Reset();
@@ -77,4 +86,12 @@ void Drivetrain::tank(double leftVel, double rightVel) {
     
     front->Set(-twist);
     back->Set(-twist);
+}
+
+void Drivetrain::raw(double left, double right, double front, double back) {
+    right->Set(right);
+	left->Set(left);
+	
+	front->Set(front);
+	back->Set(back);
 }

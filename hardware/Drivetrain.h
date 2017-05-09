@@ -3,6 +3,7 @@
 
 #include <WPILib/WPILib.h>
 #include "../BNO055.h"
+#include "../OmniBotComm.h"
 
 class Drivetrain {
 	BNO055 *gyro;
@@ -16,9 +17,9 @@ public:
 	void drive(double throttle, double turn);
 	void drive(double y, double x, double twist);
     void tank(double left, double right);
+	void raw(double left, double right, double front, double back);
     
     void reset();
-	
 	
 	double getYaw();
 
@@ -27,6 +28,8 @@ public:
     
     double getLeftDistance();
     double getRightDistance();
+
+	RobotVelocity getVelocity();
 	
 };
 

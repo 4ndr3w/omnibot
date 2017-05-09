@@ -31,28 +31,20 @@ void NetworkCommunication::handleClientThread(int sock, int addr) {
             continue;
         RobotResponse status = {true};
 
-		if ( cmd.type == MSG_DIFFERENTIAL_GOAL ) {
-            driveControl->setDifferentialGoal(cmd.data.differentialGoal.useClosedLoop, cmd.data.differentialGoal.distanceGoal, cmd.data.differentialGoal.angleGoal);
-        }
-        else if ( cmd.type == MSG_OMNI_GOAL ) {
-            driveControl->setOmniGoal(cmd.data.omniGoal.useClosedLoop, cmd.data.omniGoal.x, cmd.data.omniGoal.y, cmd.data.omniGoal.theta);
-        }
-        else if ( cmd.type == MSG_PROFILED_DIFFERENTIAL_GOAL ) {
-            driveControl->startProfiledDifferentialGoal();
-        }
-        else if ( cmd.type == MSG_APPEND_PROFILE_BUFFER ) {
-            driveControl->pushProfilePoint(cmd.data.point);
-        }
-        else if ( cmd.type == MSG_CLEAR_PROFILE_BUFFER ) {
-            driveControl->clearProfileBuffer();
-        }
-        else if ( cmd.type == MSG_SET_DIFFERENTIAL_LINEAR_PID ) {
-            printf("PID is now: %f %f %f %f\n", cmd.data.pid.p, cmd.data.pid.i, cmd.data.pid.d, cmd.data.pid.f);
-            driveControl->setDifferentialLinearPID(cmd.data.pid.p, cmd.data.pid.i, cmd.data.pid.d, cmd.data.pid.f);
-        }
-        else if ( cmd.type == MSG_SET_DIFFERENTIAL_ANGULAR_PID ) {
-            driveControl->setDifferentialAngularPID(cmd.data.pid.p, cmd.data.pid.i, cmd.data.pid.d, cmd.data.pid.f);
-        }
+		if ( cmd.type == MSG_SET_PID_FRONT )
+            driveControl->setFrontPID(cmd.data.pid);
+        else if ( cmd.type == MSG_SET_PID_BACK )
+            driveControl->setBackPID(cmd.data.pid);
+        else if ( cmd.type == MSG_SET_PID_LEFT )
+            driveControl->setLeftPID(cmd.data.pid);
+        else if ( cmd.type == MSG_SET_PID_RIGHT )
+            driveControl->setRightPID(cmd.data.pid);
+        else if ( cmd.type == MSG_RESET_POSE )
+            driveControl->reset();
+        else if ( cmd.type == MSG_VELOCITY_GOAL )
+            driveControl->setVelocityGoal(cmd.data.goal);
+        else if ( cmd.type == MSG_OPENLOOP_GOAL )
+            driveControl->setOpenLoop(cmd.data.goal);
         else
             status.result = false;
 
