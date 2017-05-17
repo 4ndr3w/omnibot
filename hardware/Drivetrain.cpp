@@ -20,10 +20,10 @@ Drivetrain::Drivetrain() {
     leftEncoder = new Encoder(LEFT_ENCODER_A_DIGITAL, LEFT_ENCODER_B_DIGITAL);
     rightEncoder = new Encoder(RIGHT_ENCODER_A_DIGITAL, RIGHT_ENCODER_B_DIGITAL, true);
 	
-    frontEncoder->SetDistancePerPulse((1/280.0)*PI*4);
-    backEncoder->SetDistancePerPulse((1/280.0)*PI*4);
-    leftEncoder->SetDistancePerPulse((1/280.0)*PI*4);
-    rightEncoder->SetDistancePerPulse((1/280.0)*PI*4);
+    frontEncoder->SetDistancePerPulse((1/280.0)*PI*0.1016);
+    backEncoder->SetDistancePerPulse((1/280.0)*PI*0.1016);
+    leftEncoder->SetDistancePerPulse((1/280.0)*PI*0.1016);
+    rightEncoder->SetDistancePerPulse((1/280.0)*PI*0.1016);
     
 	frontEncoder->Start();
 	backEncoder->Start();
@@ -72,7 +72,6 @@ void Drivetrain::drive(double y, double x, double twist) {
 	
 	front->Set(x+twist);
 	back->Set(-x+twist);
-//	printf("%i %i %i %i\n", leftEncoder->Get(), rightEncoder->Get(), frontEncoder->Get(), backEncoder->Get());
 }
 
 void Drivetrain::drive(double throttle, double turn) {
@@ -90,8 +89,8 @@ void Drivetrain::tank(double leftVel, double rightVel) {
 
 void Drivetrain::raw(double leftV, double rightV, double frontV, double backV) {
     right->Set(rightV);
-	left->Set(leftV);
+	left->Set(-leftV);
 	
 	front->Set(frontV);
-	back->Set(backV);
+	back->Set(-backV);
 }

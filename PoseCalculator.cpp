@@ -46,11 +46,11 @@ void PoseCalculator::reset() {
 
 void PoseCalculator::update() {
     static double lastTime = Timer::GetFPGATimestamp();
-    static double lastXPos = drive->getXDistance();
+    static double lastXPos = 0;//drive->getXDistance();
     static double lastYPos = drive->getYDistance();
     static double lastTheta = (360-drive->getYaw());
     
-	double xPos = drive->getXDistance();
+	double xPos = 0;//drive->getXDistance();
 	double yPos = drive->getYDistance();
 
     double theta = (360-drive->getYaw());
@@ -79,6 +79,7 @@ void PoseCalculator::update() {
     this->theta = theta;
     x += dxRot;
     y += dyRot;
+    
     if ( dt != 0 ) {
 		vx = dxRot/dt;
 		vy = dyRot/dt;

@@ -15,13 +15,13 @@ DrivetrainControl::DrivetrainControl() :
     drive(Drivetrain::getInstance()) {
 }
 
-void DrivetrainControl::setVelocityGoal(RobotVelocity goal) {
-    mode = VELOCITY;
+void DrivetrainControl::setOpenLoop(RobotVelocity goal) {
+    mode = OPENLOOP;
     drive->raw(goal.left, goal.right, goal.front, goal.back);
 }
 
-void DrivetrainControl::setOpenLoop(RobotVelocity goal) {
-    mode = OPENLOOP;
+void DrivetrainControl::setVelocityGoal(RobotVelocity goal) {
+    mode = VELOCITY;
     left.setSetpoint(goal.left);
     right.setSetpoint(goal.right);
     front.setSetpoint(goal.front);

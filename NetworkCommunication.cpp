@@ -9,6 +9,7 @@
 #include "PoseCalculator.h"
 
 NetworkCommunication::NetworkCommunication(int port, int udpPort) : TCPServer(port), poseSender(udpPort) {
+    printf("Network comm started\n");
 }
 
 void spawnNetworkCommunicationHandleClient(void* ptr, int sock, int addr) {
@@ -22,15 +23,18 @@ void NetworkCommunication::handleClient(int sock, sockaddr_in source) {
 
 
 void NetworkCommunication::handleClientThread(int sock, int addr) {
+    printf("Got client!\n");
     RobotMessage cmd;
     DrivetrainControl *driveControl = DrivetrainControl::getInstance();
     poseSender.addClient(addr);
     int bytes = 0;
-    while ( (bytes = read(sock, (char*)&cmd, sizeof(RobotMessage))) != -1 )
+    while ( (bytes = read(sock, (char*)&cmd, sizeof(RobotMessage))) > 0 )
     {
         if ( bytes != sizeof(RobotMessage) )
             continue;
         RobotResponse status = {true};
+
+        printf("Got packet type %i\n", cmd.type);
 
 		if ( cmd.type == MSG_SET_PID_FRONT )
             driveControl->setFrontPIDF(cmd.data.pid);
@@ -53,6 +57,7 @@ void NetworkCommunication::handleClientThread(int sock, int addr) {
     }
     close(sock);
     poseSender.removeClient(addr);
+    printf("Removed client\n");
 }
 
 void NetworkCommunication::updateState(RobotState &state) {

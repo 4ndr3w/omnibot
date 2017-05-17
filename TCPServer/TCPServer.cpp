@@ -2,12 +2,14 @@
 #include "sockLib.h"
 #include "taskLib.h"
 #include "strLib.h"
+#include <stdio.h>
 
 void spawnTCPServerHandler(void *ptr) {
   ((TCPServer*)ptr)->spawnServer();
 }
 
 TCPServer::TCPServer(int port) {
+  printf("TCPServer started on port %i\n", port);
   this->port = port;
   taskId = taskSpawn((char*)"TCPServerTask", 101, VX_FP_TASK, 2048, (FUNCPTR)spawnTCPServerHandler, (int)this,0,0,0,0,0,0,0,0,0);
 }

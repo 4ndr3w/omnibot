@@ -11,19 +11,21 @@ class RobotMain : public RobotBase {
 	public:
 		static void UpdateLoops(void* param) {
 			PoseCalculator::getInstance()->update();
-			DrivetrainControl::getInstance()->update();
+			//DrivetrainControl::getInstance()->update();
 		}
 
 		RobotMain() :
 			controlLoops(UpdateLoops, NULL),
 			netComm(1337, 1338)
 		{
+			m_watchdog.SetEnabled(false);
+			printf("Init finished\n");
 		}
 
 		void StartCompetition() {
-
-			double period = 1.0/100.0;
+			double period = 1.0/50.0;
 			while ( true ) {
+				printf("running\n");
 				if ( IsDisabled() ) {
 					controlLoops.Stop();
 					m_ds->InDisabled(true);
@@ -35,7 +37,7 @@ class RobotMain : public RobotBase {
 				}
 
 				if ( IsAutonomous() ) {
-					controlLoops.StartPeriodic(1.0/100.0); 
+					controlLoops.StartPeriodic(1.0/50.0); 
 
 					m_ds->InAutonomous(true);
 					while ( IsAutonomous() ) {
