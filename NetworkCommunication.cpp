@@ -34,8 +34,6 @@ void NetworkCommunication::handleClientThread(int sock, int addr) {
             continue;
         RobotResponse status = {true};
 
-        printf("Got packet type %i\n", cmd.type);
-
 		if ( cmd.type == MSG_SET_PID_FRONT )
             driveControl->setFrontPIDF(cmd.data.pid);
         else if ( cmd.type == MSG_SET_PID_BACK )
